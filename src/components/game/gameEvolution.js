@@ -14,7 +14,6 @@ const GameEvolution = (props) => {
   const address = localStorage.getItem('address');
   const addresses = localStorage.getItem('addresses');
   const partyId = localStorage.getItem('partyId');
-  const isInstructor = localStorage.getItem('isInstructor');
   const { showVideo } = props;
   const { fontFamily, fontSize } = MODULES[game];
 
@@ -39,27 +38,20 @@ const GameEvolution = (props) => {
             <div className="horizontally-centered">
               <div className="game-info">
                 <div style={{ fontFamily, fontSize }}>Welcome to Dino Adventure!</div>
-                {isInstructor
-                  ? <div style={{ fontFamily, fontSize }}>IP Addresses: {addresses}</div>
-                  : <div style={{ fontFamily, fontSize }}>IP Address: {address}</div>}
+                {addresses && (<div style={{ fontFamily, fontSize }}>IP Addresses: {addresses}</div>)}
+                {(address && address !== 'undefined') && (<div style={{ fontFamily, fontSize }}>IP Address: {address}</div>)}
               </div>
             </div>
             <div className="horizontally-centered"><UnityCanvasEvolution /></div>
             <div className="horizontally-centered"><Button variant="contained" size="large" onClick={() => instructorShowVideo()}>Show Video</Button></div>
-            {isInstructor
-            && (
-              <div className="horizontally-centered"><Button variant="contained" size="large" className="right">End Game</Button></div>
-            )}
+            {addresses && (<div className="horizontally-centered"><Button variant="contained" size="large" className="right">End Game</Button></div>)}
           </div>
         )
         : (
           <div>
             <video loop autoPlay src={MyVideo} style={{ height: '80vh' }} />
             <div className="horizontally-centered"><Button variant="contained" size="large" onClick={() => instructorStopVideo()}>Stop Video</Button></div>
-            {isInstructor
-            && (
-              <div className="horizontally-centered"><Button variant="contained" size="large" className="right">End Game</Button></div>
-            )}
+            {addresses && (<div className="horizontally-centered"><Button variant="contained" size="large" className="right">End Game</Button></div>)}
           </div>
         )}
     </div>
